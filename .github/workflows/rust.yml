@@ -16,4 +16,4 @@ jobs:
     - name: Build
       run: cargo build --verbose
     - name: Build for Windows target
-      run: cross build --target=x86_64-pc-windows-gnu --release
+      run: cross build --target=x86_64-pc-windows-gnu --release --verbose
