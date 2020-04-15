@@ -15,3 +15,5 @@ jobs:
     - uses: actions/checkout@v2
     - name: Build
       run: cargo build --verbose
+    - name: Build for Windows target
+      run: cross build --target=x86_64-pc-windows-gnu --release
