@@ -19,8 +19,8 @@ jobs:
       run: cargo install cross
     - name: Build for Windows target
       run: cross build --target=x86_64-pc-windows-gnu --release 
-    - name: Zip artifacts
-      run: zip -qq -r ./release.zip ./target/x86_64-pc-windows-gnu/release
+    #- name: Zip artifacts
+    #  run: zip -qq -r ./release.zip ./target/x86_64-pc-windows-gnu/release
     - name: Create Release
       id: create_release
       uses: actions/create-release@latest
@@ -38,6 +38,6 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GIT_TOKEN }}
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ./release.zip
-        asset_name: release.zip
-        asset_content_type: application/zip
+        asset_path: ./target/x86_64-pc-windows-gnu/release/wait.exe
+        asset_name: wait.exe
+        asset_content_type: application/exe
