@@ -18,7 +18,7 @@ jobs:
     - name: Install Cross
       run: cargo install cross
     - name: Build for Windows target
-      run: cross build --target=x86_64-pc-windows-gnu --release --target-dir="/project"
+      run: cross build --target=x86_64-pc-windows-gnu --release --target-dir="project"
     - name: Zip artifacts
       uses: montudor/action-zip@v0.1.0
       with:
