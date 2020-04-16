@@ -18,11 +18,11 @@ jobs:
     - name: Install Cross
       run: cargo install cross
     - name: Build for Windows target
-      run: sudo cross build --target=x86_64-pc-windows-gnu --release --target-dir projects
+      run: sudo cross build --target=x86_64-pc-windows-gnu --release 
     - name: Zip artifacts
       uses: montudor/action-zip@v0.1.0
       with:
-        args: zip -qq -r ./release.zip ./project
+        args: zip -qq -r ./release.zip ./target/release
     - name: Create Release
       id: create_release
       uses: actions/create-release@latest
