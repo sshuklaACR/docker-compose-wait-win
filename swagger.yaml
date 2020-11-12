@@ -1,0 +1,974 @@
+swagger: '2.0'
+info:
+  title: ACR Data Manager Service
+  description: Service for storing and managing data.
+  version: v1
+paths:
+  /api/Annotations:
+    post:
+      tags:
+        - Annotations
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/AnnotationInput'
+      responses:
+        '200':
+          description: Success
+  '/api/Annotations/{dataTagId}':
+    get:
+      tags:
+        - Annotations
+      parameters:
+        - in: path
+          name: dataTagId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+    put:
+      tags:
+        - Annotations
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: path
+          name: dataTagId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/AnnotationBase'
+      responses:
+        '200':
+          description: Success
+    delete:
+      tags:
+        - Annotations
+      parameters:
+        - in: path
+          name: dataTagId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  /api/Attributes:
+    get:
+      tags:
+        - Attributes
+      responses:
+        '200':
+          description: Success
+  /api/Data:
+    get:
+      tags:
+        - Data
+      parameters:
+        - in: query
+          name: skip
+          type: integer
+          format: int32
+          default: 0
+        - in: query
+          name: top
+          type: integer
+          format: int32
+          default: 15
+        - in: query
+          name: query
+          type: string
+          default: ''
+        - in: query
+          name: filter
+          type: string
+          default: ''
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+        - Data
+      responses:
+        '200':
+          description: Success
+  '/api/Data/{id}/contents':
+    get:
+      tags:
+        - Data
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+        - in: query
+          name: types
+          type: string
+          default: ''
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+        - Data
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/UpdateContentViewModel'
+      responses:
+        '200':
+          description: Success
+  '/api/Data/{id}/contents/{name}':
+    get:
+      tags:
+        - Data
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: name
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success
+  '/api/Data/{id}/metadata':
+    get:
+      tags:
+        - Data
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/Data/{id}/index':
+    get:
+      tags:
+        - Data
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/Data/{id}':
+    delete:
+      tags:
+        - Data
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  /api/Data/remove:
+    post:
+      tags:
+        - Data
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/DataDeleteViewModel'
+      responses:
+        '200':
+          description: Success
+  /api/Data/contents:
+    put:
+      tags:
+        - Data
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/DataContentDto'
+      responses:
+        '200':
+          description: Success
+  '/api/Data/{dataId}/contents/{contentId}':
+    delete:
+      tags:
+        - Data
+      parameters:
+        - in: path
+          name: dataId
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: contentId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/Data/{dataId}/contents/{name}':
+    delete:
+      tags:
+        - Data
+      parameters:
+        - in: path
+          name: dataId
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: name
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Success
+  '/api/Data/{id}/contents/data/{batch}':
+    get:
+      tags:
+        - Data
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: batch
+          required: true
+          type: integer
+          format: int32
+          default: 1
+        - in: query
+          name: types
+          type: string
+          default: ''
+      responses:
+        '200':
+          description: Success
+  '/api/Data/{id}/annotations':
+    get:
+      tags:
+        - Data
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  /api/DataSets:
+    get:
+      tags:
+        - DataSets
+      parameters:
+        - in: query
+          name: skip
+          type: integer
+          format: int32
+        - in: query
+          name: top
+          type: integer
+          format: int32
+          default: 10
+        - in: query
+          name: query
+          type: string
+          default: ''
+      responses:
+        '200':
+          description: Success
+    post:
+      tags:
+        - DataSets
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/DataSetCreationModel'
+      responses:
+        '200':
+          description: Success
+  '/api/DataSets/{id}/items/minimal':
+    get:
+      tags:
+        - DataSets
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/DataSets/{id}/items':
+    get:
+      tags:
+        - DataSets
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+        - in: query
+          name: skip
+          type: integer
+          format: int32
+        - in: query
+          name: top
+          type: integer
+          format: int32
+          default: 25
+      responses:
+        '200':
+          description: Success
+  /api/DataSets/updateinfo:
+    post:
+      tags:
+        - DataSets
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/DataSetViewModel'
+      responses:
+        '200':
+          description: Success
+  '/api/DataSets/{id}/items/append':
+    put:
+      tags:
+        - DataSets
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/DataSets/{id}':
+    delete:
+      tags:
+        - DataSets
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/DataSets/{dataSetId}/items/{dataId}':
+    delete:
+      tags:
+        - DataSets
+      parameters:
+        - in: path
+          name: dataSetId
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: dataId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/DataSets/{dataSetId}/items/{dataId}/tags':
+    get:
+      tags:
+        - DataSets
+      parameters:
+        - in: path
+          name: dataSetId
+          required: true
+          type: integer
+          format: int32
+        - in: path
+          name: dataId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  '/api/DataSets/{dataSetId}/tags':
+    get:
+      tags:
+        - DataSets
+      parameters:
+        - in: path
+          name: dataSetId
+          required: true
+          type: integer
+          format: int32
+        - in: query
+          name: name
+          type: string
+          default: ''
+      responses:
+        '200':
+          description: Success
+  /api/DataSets/bulksave:
+    post:
+      tags:
+        - DataSets
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/BulkDataSetDto'
+      responses:
+        '200':
+          description: Success
+  '/api/DataSets/{dataSetId}/move':
+    post:
+      tags:
+        - DataSets
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: path
+          name: dataSetId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/DataMoveViewModel'
+      responses:
+        '200':
+          description: Success
+  '/api/DataSets/{dataSetId}/delete':
+    post:
+      tags:
+        - DataSets
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: path
+          name: dataSetId
+          required: true
+          type: integer
+          format: int32
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/DataSetItemDeleteViewModel'
+      responses:
+        '200':
+          description: Success
+  '/api/DataSets/{dataSetId}/annotations/counts':
+    get:
+      tags:
+        - DataSets
+      parameters:
+        - in: path
+          name: dataSetId
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+  /api/DataSources:
+    post:
+      tags:
+        - DataSources
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/DataSourceDto'
+      responses:
+        '200':
+          description: Success
+    get:
+      tags:
+        - DataSources
+      responses:
+        '200':
+          description: Success
+  '/api/DataSources/{id}':
+    delete:
+      tags:
+        - DataSources
+      summary: Delete data source
+      description: Deletes data source.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Data Source deleted
+        '500':
+          description: Server error
+  '/api/DataSources/guid/{guid}':
+    delete:
+      tags:
+        - DataSources
+      summary: Delete data source
+      description: Deletes data source.
+      parameters:
+        - in: path
+          name: guid
+          required: true
+          type: string
+          format: uuid
+      responses:
+        '200':
+          description: Data Source deleted
+        '500':
+          description: Server error
+  /api/DataTags:
+    post:
+      tags:
+        - DataTags
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/AnnotationInput'
+      responses:
+        '200':
+          description: Success
+  /api/Hook:
+    post:
+      tags:
+        - Hook
+      consumes:
+        - application/json-patch+json
+        - application/json
+        - text/json
+        - application/*+json
+      parameters:
+        - in: body
+          name: body
+          schema:
+            $ref: '#/definitions/ConfigurationData'
+      responses:
+        '200':
+          description: Success
+        '500':
+          description: Server Error
+  '/api/Hook/unregister/{sourceid}':
+    delete:
+      tags:
+        - Hook
+      parameters:
+        - in: path
+          name: sourceid
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+        '500':
+          description: Server Error
+  '/api/Hook/hashookregistered/{id}':
+    get:
+      tags:
+        - Hook
+      parameters:
+        - in: path
+          name: id
+          required: true
+          type: integer
+          format: int32
+      responses:
+        '200':
+          description: Success
+        '500':
+          description: Server Error
+  /api/Hook/IsAlive:
+    get:
+      tags:
+        - Hook
+      responses:
+        '200':
+          description: Success
+        '500':
+          description: Server Error
+  /api/Profiles/anonymization:
+    get:
+      tags:
+        - Profiles
+      summary: Get list of all anonymization profiles
+      responses:
+        '200':
+          description: Success
+definitions:
+  AnnotationInput:
+    type: object
+    properties:
+      dataSetId:
+        format: int32
+        type: integer
+      dataId:
+        format: int32
+        type: integer
+      name:
+        type: string
+      content:
+        type: string
+      contentType:
+        type: string
+  AnnotationBase:
+    type: object
+    properties:
+      name:
+        type: string
+      content:
+        type: string
+      contentType:
+        type: string
+  UpdateContentViewModel:
+    type: object
+    properties:
+      id:
+        format: int32
+        type: integer
+      dataId:
+        format: int32
+        type: integer
+      contentType:
+        type: string
+      content:
+        format: byte
+        type: string
+      dataManagerContentType:
+        type: string
+      name:
+        type: string
+  DataDeleteViewModel:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          format: int32
+          type: integer
+      excludeItems:
+        type: array
+        items:
+          format: int32
+          type: integer
+  DataContentDto:
+    type: object
+    properties:
+      name:
+        type: string
+      content:
+        type: string
+  DataItemOutputDto:
+    type: object
+    properties:
+      contentLength:
+        format: int32
+        type: integer
+      hash:
+        format: byte
+        type: string
+      content:
+        type: string
+      id:
+        format: int32
+        type: integer
+      name:
+        type: string
+      contentType:
+        type: string
+      dataManagerContentType:
+        type: string
+  ThumbnailDto:
+    type: object
+    properties:
+      url:
+        type: string
+      hash:
+        type: string
+      placeholder:
+        type: boolean
+  Annotation:
+    type: object
+    properties:
+      id:
+        format: int32
+        type: integer
+      contentJSON:
+        type: object
+      dataName:
+        type: string
+      dataSetName:
+        type: string
+      dataSetId:
+        format: int32
+        type: integer
+      dataId:
+        format: int32
+        type: integer
+      name:
+        type: string
+      content:
+        type: string
+      contentType:
+        type: string
+  DataViewModelDetail:
+    type: object
+    properties:
+      dataId:
+        format: uuid
+        type: string
+      contents:
+        type: array
+        items:
+          $ref: '#/definitions/DataItemOutputDto'
+      thumbnail:
+        allOf:
+          - $ref: '#/definitions/ThumbnailDto'
+      title:
+        type: string
+      subTitle:
+        type: string
+      studyDate:
+        type: string
+      seriesNumber:
+        type: string
+      instanceNumber:
+        type: string
+      accessionNumber:
+        type: string
+      annotation:
+        type: string
+      tags:
+        type: array
+        items:
+          $ref: '#/definitions/Annotation'
+        readOnly: true
+      name:
+        type: string
+      source:
+        type: string
+      id:
+        format: int32
+        type: integer
+      anonymized:
+        type: string
+  DataSetCreationModel:
+    type: object
+    properties:
+      includeAll:
+        type: boolean
+      excludeItems:
+        type: array
+        items:
+          format: int32
+          type: integer
+      query:
+        type: string
+      filter:
+        type: string
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/DataViewModelDetail'
+      id:
+        format: int32
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      owner:
+        type: string
+  DataSetViewModel:
+    type: object
+    properties:
+      items:
+        type: array
+        items:
+          $ref: '#/definitions/DataViewModelDetail'
+      id:
+        format: int32
+        type: integer
+      name:
+        type: string
+      description:
+        type: string
+      owner:
+        type: string
+  BulkDataDto:
+    type: object
+    properties:
+      name:
+        type: string
+      id:
+        format: uuid
+        type: string
+      annotation:
+        type: array
+        items:
+          $ref: '#/definitions/AnnotationInput'
+      pending:
+        type: boolean
+      anonymized:
+        type: string
+  BulkDataSetDto:
+    type: object
+    properties:
+      datasetName:
+        type: string
+      sourceId:
+        format: uuid
+        type: string
+      data:
+        type: array
+        items:
+          $ref: '#/definitions/BulkDataDto'
+  DataMoveViewModel:
+    type: object
+    properties:
+      dataSetName:
+        type: string
+      items:
+        type: array
+        items:
+          format: int32
+          type: integer
+      excludeItems:
+        type: array
+        items:
+          format: int32
+          type: integer
+      includeTags:
+        type: boolean
+  DataSetItemDeleteViewModel:
+    type: object
+    properties:
+      deletingItems:
+        type: array
+        items:
+          format: int32
+          type: integer
+      excludeItems:
+        type: array
+        items:
+          format: int32
+          type: integer
+  DataSourceDto:
+    type: object
+    properties:
+      id:
+        format: int32
+        type: integer
+      name:
+        type: string
+      sourceId:
+        format: uuid
+        type: string
+      description:
+        type: string
+  ConfigurationData:
+    type: object
+    properties:
+      sourceid:
+        format: int32
+        type: integer
+      callBackUrl:
+        type: string
+      filter:
+        type: object
+        additionalProperties:
+          type: string
